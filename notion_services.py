@@ -13,6 +13,7 @@ class NotionService:
         prop_map = {
             "title": lambda v: {"title": [{"text": {"content": v}}]},
             "select": lambda v: {"select": {"name": v}},
+            "multi-select": lambda v: {"multi_select": [{"name": item} for item in v]},
             "number": lambda v: {"number": v},
             "rich_text": lambda v: {"rich_text": [{"text": {"content": v}}]},
             "checkbox": lambda v: {"checkbox": v},
