@@ -1,6 +1,7 @@
 import requests
 
 class NotionService:
+
     def __init__(self, config):
         self.base_url = "https://api.notion.com/v1"
         self.headers = {
@@ -9,6 +10,7 @@ class NotionService:
             "Notion-Version": config["NOTION_VERSION"]
         }
 
+# === [INIT] Construct Properties ===
     def build_properties(self, field_dict: dict) -> dict:
         prop_map = {
             "title": lambda v: {"title": [{"text": {"content": v}}]},
@@ -36,3 +38,9 @@ class NotionService:
             print(f"❌ Erro ao criar página: {response.status_code}")
             print(response.json())
             return None
+# === [END] Construct Properties ===
+
+# === [INIT] Interests Identifier
+
+# Função para verificar uma nova tabela (interesses), onde poderá ser registrado um tema e ao marcar uma checkbox, o mesmo irá gerar uma missao e uma recompensa
+# Tambem devemos fazer uma comunicação com um novo arquivo Service da OpenAI para que o conteudo das missoes e recompensas seja gerado
