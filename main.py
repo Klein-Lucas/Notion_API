@@ -1,6 +1,11 @@
 from env_loader import load_env
 from notion_services import NotionService
 
+# Como vou criar essas coisas na main?
+# Terei que ter um outro service que vai gerar os campos específicos daquele banco de dados.
+
+# Como vou resolver o problema para o campo específico do personagem que vai ser padrão, sem estragar a versatilidade do codigo?
+
 def main():
     config = load_env()
     notion = NotionService(config)
