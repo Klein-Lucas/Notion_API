@@ -1,36 +1,32 @@
 from env_loader import load_env
 from notion_services import NotionService
 
-# Como vou criar essas coisas na main?
-# Terei que ter um outro service que vai gerar os campos específicos daquele banco de dados.
-
-# Como vou resolver o problema para o campo específico do personagem que vai ser padrão, sem estragar a versatilidade do codigo?
 
 def main():
     config = load_env()
     notion = NotionService(config)
 
-    # 1️⃣ Criar Recompensa
-    recompensa_fields = {
-        "Name": ("title", "Bônus de Foco"),
+    # 1. Create a reward
+    reward_fields = {
+        "Name": ("title", "Focus Bonus"),
         "Tipo": ("select", "Item"),
         "+ XP": ("number", 20),
     }
-    recompensa_id = notion.create_page(config["NOTION_REWARDS_DB_ID"], recompensa_fields)
+    reward_id = notion.create_page(config["NOTION_REWARDS_DB_ID"], reward_fields)
 
-    if not recompensa_id:
-        print("❌ Não foi possível criar a recompensa.")
+    if not reward_id:
+        print("Failed to create reward.")
         return
 
-    # 2️⃣ Criar Missão associada à recompensa
-    missao_fields = {
-        "Name": ("title", "Estudar por 2h"),
-        "Categoria": ("multi-select", ["Estudo"]),
+    # 2. Create a mission linked to the reward
+    mission_fields = {
+        "Name": ("title", "Study for 2 hours"),
+        "Categoria": ("multi-select", ["Study"]),
         "Dificuldade": ("select", "⭐⭐⭐"),
-        "Status": ("select", "Pendente"),
-        "Recompensa": ("relation", recompensa_id)
+        "Status": ("select", "Pending"),
+        "Recompensa": ("relation", reward_id)
     }
-    notion.create_page(config["NOTION_MISSIONS_DB_ID"], missao_fields)
+    notion.create_page(config["NOTION_MISSIONS_DB_ID"], mission_fields)
 
 if __name__ == "__main__":
     main()
